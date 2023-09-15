@@ -1,13 +1,13 @@
 def tournamentGameGenerator(teams_list, wins_list):
     tournament_games = []
-    win_dict = {key:value for key,value in zip(wins_list,teams_list)}
-    sorted_win_list = sorted(wins_list)
+    sorted_pairs = sorted(zip(wins_list, teams_list), key=lambda x: x[0])
+    sorted_teams = [pair[1] for pair in sorted_pairs]
     idx2 = int(len(wins_list)/2)
-    home_keys = sorted_win_list[:idx2]
-    away_keys = sorted_win_list[idx2:][::-1]
+    home_team_list = sorted_teams[:idx2]
+    away_team_list = sorted_teams[idx2:][::-1]
 
-    for home,away in zip(home_keys,away_keys):
-        tournament_games.append(f'Home: {win_dict[home]} VS Away: {win_dict[away]}')
+    for home,away in zip(home_team_list,away_team_list):
+        tournament_games.append(f'Home: {home} VS Away: {away}')
 
     return tournament_games
 
@@ -17,8 +17,11 @@ wins_list = []
 number_of_games = 0
 while True:
     no_of_teams = int(input('Enter the number of teams in the tournament: '))
-    if no_of_teams >= 2:
+    if no_of_teams >= 2 and no_of_teams % 2 ==0:
         break
+
+    elif no_of_teams % 2 != 0:
+        print('The number of teams has to be even. try again.')
     else:
         print('The minimum number of teams is 2, try again.')
 
